@@ -160,7 +160,7 @@ class ManualSamSegmenter(AbstractNode):
                          requirements=[],
                          user_can_retry=False,
                          node_title="Manual SAM Segmenter")
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
         self.sam_mask_generator = None
         self.sam = None
         self.sam_predictor = None

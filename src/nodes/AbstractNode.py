@@ -1,5 +1,6 @@
 import src.user_interaction as usr_int
 import src.file_handler as file_handler
+import os
 import matplotlib.pyplot as plt
 
 class AbstractNode:
@@ -20,6 +21,7 @@ class AbstractNode:
         self.user_can_retry = user_can_retry
         self.node_title = node_title
         self.requirements_met = True
+        self.save_folder = "output/"
         
 
     def get_output_name(self):
@@ -44,15 +46,7 @@ class AbstractNode:
         
 
     def check_requirements(self):
-        from src.fishnet import FishNet
-        for requirement in self.requirements:
-            if requirement not in FishNet.pipeline_output.keys():
-                user_response_id = usr_int.ask_if_user_has_replacement_for_requirement(requirement)
-                if user_response_id == usr_int.positive_response_id:
-                    loaded_img = file_handler.load_img_file()
-                    FishNet.pipeline_output[requirement] = loaded_img
-                elif user_response_id == usr_int.negative_response_id:
-                    self.requirements_met = False
+        pass
 
     def node_intro_msg(self):
         prompt = f"\n---- Commencing {self.node_title} ----\n"
@@ -62,8 +56,9 @@ class AbstractNode:
         pass
 
     def save_img(self, img, img_name, cmap="gray"):
-        from src.fishnet import FishNet
-        folder_name = FishNet.save_folder
+        if not os.path.exists(self.save_folder):
+            os.makedirs(self.save_folder)
+        folder_name = self.save_folder
         img_file_path = folder_name + img_name
         fig, ax = plt.subplots(figsize=(16, 16))
         plt.axis("off")
