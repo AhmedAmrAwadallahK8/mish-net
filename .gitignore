@@ -1,0 +1,9 @@
+__pycache__
+/example_imgs
+/sam_model
+/venv
+/output
+*/models
+*.un~
+*~
+*.swp
